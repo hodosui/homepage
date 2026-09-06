@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>横浜保土ケ谷区民吹奏楽団（ほどすい）</title>
@@ -260,7 +261,7 @@
 <body>
 
   <header id="home">
-    <img src="hodosui_F.png" alt="フォーマルロゴ" , width=400>
+    <img src="hodosui_F.png" alt="フォーマルロゴ"  width=400>
   </header>
 
   <nav>
@@ -305,10 +306,53 @@
     </section>
 
     <section id="practice">
-      <h2>♪練習日程</h2>
-      <ul class="info-list">
-
+      <h2>♪ 練習日程</h2>
+      <ul class="info-list" id="schedule">
+        <li>読み込み中...</li>
       </ul>
+
+      <script>
+      fetch("練習日程.xlsx")
+        .then(response => response.arrayBuffer())
+        .then(data => {
+
+          const workbook = XLSX.read(data, {
+            type: "array"
+          });
+
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+          const rows = XLSX.utils.sheet_to_json(sheet, {
+            header: 1
+          });
+
+          const list = document.getElementById("schedule");
+
+          list.innerHTML = "";
+
+          // Excelの1行目を見出しとして、2行目から表示
+          rows.slice(1).forEach(row => {
+
+            // 空行は無視
+            if (row.length === 0 || row.every(cell => cell === "" || cell == null)) {
+              return;
+            }
+
+            const li = document.createElement("li");
+
+            // Excelの各セルを「　」で区切って表示
+            li.textContent = row.filter(cell => cell != null && cell !== "").join("　");
+
+            list.appendChild(li);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+
+          document.getElementById("schedule").innerHTML =
+            "<li>練習日程を読み込めませんでした。</li>";
+        });
+      </script>
     </section>
 
 
@@ -329,13 +373,13 @@
         <li>ブランクがあってもＯＫ、音楽を楽しみたい、また吹奏楽がやりたい方々、新設楽団でやってみませんか？！</li>
         <li>下のリンクより「お名前」と「楽器名」を明記の上、メールにてお問合せください♪</li>
       </ul>
-      </ul>
     </section>
 
     <section id="contact">
       <h2>♪ リンク</h2>
       <div class="contact-wrapper">
-        <img src="QRx4 B.png" alt="QRコード" , width=400>        
+        <img src="QRx4 B.png" alt="QRコード"  width=400>
+      </div>
     </section>
 
   </div>
