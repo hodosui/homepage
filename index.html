@@ -256,6 +256,37 @@
       flex-direction: column;
     }
   }
+
+  .schedule-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  #schedule {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+  }
+
+  #schedule th,
+  #schedule td {
+    border: 1px solid var(--border-color);
+    padding: 0.7rem 0.8rem;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  #schedule th {
+    background-color: #f1f5f9;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+
+  #schedule tr:nth-child(even) td {
+    background-color: #fafafa;
+  }
 </style>
 </head>
 <body>
@@ -269,7 +300,7 @@
       <li><a href="#home">ホーム</a></li>
       <li><a href="#news">新着情報</a></li>
       <li><a href="#about">楽団について</a></li>
-      <li><a href="#schedule">練習日程</a></li>
+      <li><a href="#practice">練習日程</a></li>
       <li><a href="#museum">ミュージアム</a></li>
       <li><a href="#recruit">団員募集</a></li>
       <li><a href="#contact">リンク</a></li>
@@ -305,63 +336,63 @@
       </ul>
     </section>
 
-    <section id="practice">
-      <h2>♪ 練習日程</h2>
-
-      <ul class="info-list" id="schedule">
-        <li>読み込み中...</li>
-      </ul>
-
-      <script>
-        fetch("schedule.xlsx")
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Excelファイルを読み込めませんでした");
-            }
-            return response.arrayBuffer();
-          })
-          .then(data => {
-
-            const workbook = XLSX.read(data, {
-              type: "array"
-            });
-
-            const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-            const rows = XLSX.utils.sheet_to_json(sheet, {
-              header: 1
-            });
-
-            const list = document.getElementById("schedule");
-
-            list.innerHTML = "";
-
-            // Excelの1行目を見出しとして、2行目から表示
-            rows.slice(1).forEach(row => {
-
-              // 空行は無視
-              if (
-                row.length === 0 ||
-                row.every(cell => cell === "" || cell == null)
-              ) {
-                return;
+    <section id="practice"> <h2>♪ 練習日程</h2>
+        <div class="schedule-table-wrapper"> <table id="schedule"> <tbody> <tr> <td>読み込み中...</td> </tr> </tbody> </table> </div>
+        <script>
+          fetch("schedule.xlsx")
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("schedule.xlsx を読み込めませんでした");
               }
 
-              const li = document.createElement("li");
+              return response.arrayBuffer();
+            })
+            .then(data => {
+              const workbook = XLSX.read(data, {
+                type: "array"
+              });
 
-              li.textContent = row
-                .filter(cell => cell != null && cell !== "")
-                .join("　");
+              const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-              list.appendChild(li);
+              const rows = XLSX.utils.sheet_to_json(sheet, {
+                header: 1,
+                defval: ""
+              });
+
+              const table = document.getElementById("schedule");
+
+              table.innerHTML = "";
+
+              rows.forEach((row, rowIndex) => {
+                if (
+                  row.length === 0 ||
+                  row.every(cell => cell === "" || cell == null)
+                ) {
+                  return;
+                }
+
+                const tr = document.createElement("tr");
+
+                row.forEach(cell => {
+                  const cellElement = document.createElement(
+                    rowIndex === 0 ? "th" : "td"
+                  );
+
+                  cellElement.textContent = cell == null ? "" : cell;
+
+                  tr.appendChild(cellElement);
+                });
+
+                table.appendChild(tr);
+              });
+            })
+            .catch(error => {
+              console.error(error);
+
+              document.getElementById("schedule").innerHTML =
+                "<tr><td>練習日程を読み込めませんでした。</td></tr>";
             });
-          })
-          .catch(error => {
-            console.error(error);
-            document.getElementById("schedule").innerHTML =
-              "<li>練習日程を読み込めませんでした。</li>";
-          });
-      </script>
+        </script>
     </section>
 
     <section id="museum">
