@@ -269,7 +269,7 @@
       <li><a href="#home">ホーム</a></li>
       <li><a href="#news">新着情報</a></li>
       <li><a href="#about">楽団について</a></li>
-      <li><a href="#practice">練習日程</a></li>
+      <li><a href="#schedule">練習日程</a></li>
       <li><a href="#museum">ミュージアム</a></li>
       <li><a href="#recruit">団員募集</a></li>
       <li><a href="#contact">リンク</a></li>
@@ -307,54 +307,62 @@
 
     <section id="practice">
       <h2>♪ 練習日程</h2>
+
       <ul class="info-list" id="schedule">
         <li>読み込み中...</li>
       </ul>
 
       <script>
-      fetch("練習日程.xlsx")
-        .then(response => response.arrayBuffer())
-        .then(data => {
-
-          const workbook = XLSX.read(data, {
-            type: "array"
-          });
-
-          const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-          const rows = XLSX.utils.sheet_to_json(sheet, {
-            header: 1
-          });
-
-          const list = document.getElementById("schedule");
-
-          list.innerHTML = "";
-
-          // Excelの1行目を見出しとして、2行目から表示
-          rows.slice(1).forEach(row => {
-
-            // 空行は無視
-            if (row.length === 0 || row.every(cell => cell === "" || cell == null)) {
-              return;
+        fetch("schedule.xlsx")
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Excelファイルを読み込めませんでした");
             }
+            return response.arrayBuffer();
+          })
+          .then(data => {
 
-            const li = document.createElement("li");
+            const workbook = XLSX.read(data, {
+              type: "array"
+            });
 
-            // Excelの各セルを「　」で区切って表示
-            li.textContent = row.filter(cell => cell != null && cell !== "").join("　");
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-            list.appendChild(li);
+            const rows = XLSX.utils.sheet_to_json(sheet, {
+              header: 1
+            });
+
+            const list = document.getElementById("schedule");
+
+            list.innerHTML = "";
+
+            // Excelの1行目を見出しとして、2行目から表示
+            rows.slice(1).forEach(row => {
+
+              // 空行は無視
+              if (
+                row.length === 0 ||
+                row.every(cell => cell === "" || cell == null)
+              ) {
+                return;
+              }
+
+              const li = document.createElement("li");
+
+              li.textContent = row
+                .filter(cell => cell != null && cell !== "")
+                .join("　");
+
+              list.appendChild(li);
+            });
+          })
+          .catch(error => {
+            console.error(error);
+            document.getElementById("schedule").innerHTML =
+              "<li>練習日程を読み込めませんでした。</li>";
           });
-        })
-        .catch(error => {
-          console.error(error);
-
-          document.getElementById("schedule").innerHTML =
-            "<li>練習日程を読み込めませんでした。</li>";
-        });
       </script>
     </section>
-
 
     <section id="museum">
       <h2>♪ ミュージアム</h2>
