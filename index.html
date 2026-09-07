@@ -287,6 +287,25 @@
   #schedule tr:nth-child(even) td {
     background-color: #fafafa;
   }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .nav-icon img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+  }
+
 </style>
 </head>
 <body>
@@ -296,15 +315,21 @@
   </header>
 
   <nav>
-    <ul>
-      <li><a href="#home">ホーム</a></li>
-      <li><a href="#news">新着情報</a></li>
-      <li><a href="#about">楽団について</a></li>
-      <li><a href="#practice">練習日程</a></li>
-      <li><a href="#museum">ミュージアム</a></li>
-      <li><a href="#recruit">団員募集</a></li>
-      <li><a href="#contact">リンク</a></li>
-    </ul>
+    <div class="nav-inner">
+    <span style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; background-color: white; border-radius: 50%;">
+      <img src="hodosui_icon(S).png" alt="ほどすいアイコン" style="width: 35px; height: 35px; object-fit: contain;">
+    </span>
+
+      <ul>
+        <li><a href="#home">ホーム</a></li>
+        <li><a href="#news">新着情報</a></li>
+        <li><a href="#about">楽団について</a></li>
+        <li><a href="#practice">練習日程</a></li>
+        <li><a href="#museum">ミュージアム</a></li>
+        <li><a href="#recruit">団員募集</a></li>
+        <li><a href="#contact">コンタクト</a></li>
+      </ul>
+    </div>
   </nav>
 
   <div class="hero">
@@ -349,10 +374,8 @@
               <th>備考</th>
             </tr>
           </thead>
-
           <tbody>
             <!-- ↓↓↓↓↓　練習日程を追加　↓↓↓↓↓ -->
-
             <tr>
               <td>10/10 ㈯</td><td>17:30 ～ 22:00</td><td>保土ケ谷公会堂（会議室）</td><td>役員会</td>
             </tr>
@@ -389,7 +412,6 @@
             <tr>
               <td>02/11 ㈭ ㊗</td><td>09:00 ～ 21:00</td><td>アートホール（ホール）</td><td><span style="color: red;"><B>創立記念定期演奏会</B></span></td>
             </tr>
-
             <!-- ↑↑↑↑↑　練習日程を追加　↑↑↑↑↑ -->
           </tbody>
         </table>
@@ -411,17 +433,60 @@
         <li>もちろん、全パート大募集中です！</li>
         <li>高校生以上で吹奏楽コンクール出場している他団体に所属していない方、お待ちしております！</li>
         <li>ブランクがあってもＯＫ、音楽を楽しみたい、また吹奏楽がやりたい方々、新設楽団でやってみませんか？！</li>
-        <li>下のリンクより「お名前」と「楽器名」を明記の上、メールにてお問合せください♪</li>
+        <li>下のコンタクトより「お名前」と「楽器名」を明記の上、メールにてお問合せください♪</li>
       </ul>
     </section>
 
     <section id="contact">
-      <h2>♪ リンク</h2>
-      <div class="contact-wrapper">
-        <img src="QRx4 B.png" alt="QRコード"  width=400>
+      <h2>♪ コンタクト</h2>
+
+      <div class="qr-section">
+
+        <div class="qr-box" style="width: 250px;">
+          <p style="font-size: 18px;">公式サイト</p>
+          <a href="https://hodosui.github.io/homepage/" target="_blank" style="text-decoration: none;">
+            <img src="QR(HP).png" alt="Homepage">
+          </a>
+          <p style="margin: 0.5rem 0 0 0;">
+            <a href="https://hodosui.github.io/homepage/" target="_blank" style="text-decoration: none;">https://hodosui.github.io/homepage/</a>
+          </p>
+          <p>「ほどすい」で検索</p>
+        </div>
+
+        <div class="qr-box" style="width: 250px;">
+          <p style="font-size: 18px;">Mail（お問い合わせ）</p>
+            <a href="mailto:hodosui.winds@gmail.com" style="text-decoration: none;">
+              <img src="QR(Mail).png" alt="Mail">
+            </a>
+          <p>
+            <a href="mailto:hodosui.winds@gmail.com" style="text-decoration: none;">
+              hodosui.winds@gmail.com
+            </a>
+          </p>
+        </div>
+
+        <div class="qr-box" style="width: 250px;">
+          <p style="font-size: 18px;">Instagram</p>
+          <a href="https://www.instagram.com/hodosui.winds/" target="_blank" style="text-decoration: none;">
+            <img src="QR(Instagram).png" alt="Instagram">
+          </a>
+          <p style="margin: 0.5rem 0 0 0;">
+            <a href="https://www.instagram.com/hodosui.winds/" target="_blank" style="text-decoration: none;">hodosui.winds</a>
+          </p>
+        </div>
+
+        <div class="qr-box" style="width: 250px;">
+          <p style="font-size: 18px;">Facebook</p>
+          <a href="https://www.facebook.com/hodosui" target="_blank" style="text-decoration: none;">
+            <img src="QR(Facebook).png" alt="Facebook">
+          </a>
+          <p style="margin: 0.5rem 0 0 0;">
+            <a href="https://www.facebook.com/hodosui" target="_blank" style="text-decoration: none;">hodosui</a>
+          </p>
+        </div>
+
       </div>
     </section>
-
   </div>
 
   <footer>
