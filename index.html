@@ -292,7 +292,7 @@
 <body>
 
   <header id="home">
-    <img src="hodosui_F.png" alt="フォーマルロゴ"  width=400>
+    <img src="hodosui_F.png" alt="フォーマルロゴ"  width=350>
   </header>
 
   <nav>
@@ -336,63 +336,64 @@
       </ul>
     </section>
 
-    <section id="practice"> <h2>♪ 練習日程</h2>
-        <div class="schedule-table-wrapper"> <table id="schedule"> <tbody> <tr> <td>読み込み中...</td> </tr> </tbody> </table> </div>
-        <script>
-          fetch("schedule.xlsx")
-            .then(response => {
-              if (!response.ok) {
-                throw new Error("schedule.xlsx を読み込めませんでした");
-              }
+    <section id="practice">
+      <h2>♪ 練習日程</h2>
 
-              return response.arrayBuffer();
-            })
-            .then(data => {
-              const workbook = XLSX.read(data, {
-                type: "array"
-              });
+      <div class="schedule-table-wrapper">
+        <table id="schedule">
+          <thead>
+            <tr>
+              <th>日にち</th>
+              <th>時間</th>
+              <th>場所</th>
+              <th>備考</th>
+            </tr>
+          </thead>
 
-              const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          <tbody>
+            <!-- ↓↓↓↓↓　練習日程を追加　↓↓↓↓↓ -->
 
-              const rows = XLSX.utils.sheet_to_json(sheet, {
-                header: 1,
-                defval: ""
-              });
+            <tr>
+              <td>10/10 ㈯</td><td>17:30 ～ 22:00</td><td>保土ケ谷公会堂（会議室）</td><td>役員会</td>
+            </tr>
+            <tr>
+              <td>10/12 ㈪ ㊗</td><td>09:00 ～ 21:00</td><td>保土ケ谷公会堂（会議室）</td><td>役員会</td>
+            </tr>
+            <tr>
+              <td>10/17 ㈯</td><td>17:30 ～ 22:00</td><td>保土ケ谷公会堂（会議室）</td><td><span style="color: red;">入団説明会</span></td>
+            </tr>
+            <tr>
+              <td>10/18 ㈰</td><td>17:30 ～ 22:00</td><td>保土ケ谷公会堂（会議室）</td><td><span style="color: red;">入団説明会</span></td>
+            </tr>
+            <tr>
+              <td>10/25 ㈰</td><td>17:30 ～ 22:00</td><td>保土ケ谷公会堂（会議室）</td><td><span style="color: red;">入団説明会</span></td>
+            </tr>
+            <tr>
+              <td>11/03 ㈫ ㊗</td><td>09:00 ～ 12:00</td><td>アートホール（第1スタジオ）</td><td><span style="color: red;"><B>創立総会</B></span></td>
+            </tr>
+            <tr>
+              <td>11/15 ㈰</td><td>18:00 ～ 21:00</td><td>アートホール（第1スタジオ）</td><td>練習</td>
+            </tr>
+            <tr>
+              <td>11/29 ㈰</td><td>18:00 ～ 21:00</td><td>アートホール（第1スタジオ）</td><td>練習</td>
+            </tr>
+            <tr>
+              <td>12/27 ㈰</td><td>18:00 ～ 21:00</td><td>アートホール（第1スタジオ）</td><td>練習</td>
+            </tr>
+            <tr>
+              <td>01/24 ㈰</td><td>18:00 ～ 21:00</td><td>アートホール（第1スタジオ）</td><td>練習</td>
+            </tr>
+            <tr>
+              <td>02/07 ㈰</td><td>09:00 ～ 21:00</td><td>アートホール（ホール）</td><td>練習</td>
+            </tr>
+            <tr>
+              <td>02/11 ㈭ ㊗</td><td>09:00 ～ 21:00</td><td>アートホール（ホール）</td><td><span style="color: red;"><B>創立記念定期演奏会</B></span></td>
+            </tr>
 
-              const table = document.getElementById("schedule");
-
-              table.innerHTML = "";
-
-              rows.forEach((row, rowIndex) => {
-                if (
-                  row.length === 0 ||
-                  row.every(cell => cell === "" || cell == null)
-                ) {
-                  return;
-                }
-
-                const tr = document.createElement("tr");
-
-                row.forEach(cell => {
-                  const cellElement = document.createElement(
-                    rowIndex === 0 ? "th" : "td"
-                  );
-
-                  cellElement.textContent = cell == null ? "" : cell;
-
-                  tr.appendChild(cellElement);
-                });
-
-                table.appendChild(tr);
-              });
-            })
-            .catch(error => {
-              console.error(error);
-
-              document.getElementById("schedule").innerHTML =
-                "<tr><td>練習日程を読み込めませんでした。</td></tr>";
-            });
-        </script>
+            <!-- ↑↑↑↑↑　練習日程を追加　↑↑↑↑↑ -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section id="museum">
